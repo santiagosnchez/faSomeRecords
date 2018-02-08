@@ -29,4 +29,4 @@ In the list file (e.g. `IneedTheseSeqs.txt`) you must have only the headers with
     ...
     seqN
 
-Pretty straight forward.
+Pretty straightforward.
