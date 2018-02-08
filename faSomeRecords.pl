@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# inspired in faSomeRecords
+# inspired by faSomeRecords from kentUtils: https://github.com/ENCODE-DCC/kentUtils/tree/master/src/utils/faSomeRecords
 
 if (grep { /^-he{0,1}l{0,1}p{0,1}$/ } @ARGV){
 	die "
