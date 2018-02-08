@@ -1,7 +1,7 @@
 # faSomeRecords
 Extracts FASTA records from multiFASTA file based on a list of FASTA headers
 
-Inspired by the C++ version of faSomeRecords[https://github.com/ENCODE-DCC/kentUtils/tree/master/src/utils/faSomeRecords]  from kentUtils
+Inspired by the C++ version of [faSomeRecords](https://github.com/ENCODE-DCC/kentUtils/tree/master/src/utils/faSomeRecords)  from kentUtils
 
 ## Download
 
