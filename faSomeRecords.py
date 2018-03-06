@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # faSomeRecords.py
 
 import argparse, textwrap
