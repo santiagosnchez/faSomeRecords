@@ -39,9 +39,9 @@ sequenceN
     help='name for output file (default: %(default)s).')
     parser.add_argument(
     '--wrap', '-w', const=100, metavar='N', nargs="?", type=int, default=False,
-    help='sequences will be wrapped every N characters (default: %(default)s).')
+    help='sequences will be wrapped every N characters (default: 100.')
     parser.add_argument(
-    '--stdout', '-s', const=True, metavar="", nargs="?", type=bool, default=False,
+    '--stdout', '-s',  action="store_true", default=False,
     help='if sequences should be printed to screen.')
     args = parser.parse_args()
     if args.list == None and args.records == None:
