@@ -65,7 +65,7 @@ Pretty straightforward.
 
 ## Perl version
 
-I recommend using the Python version! Which is the one with will be developed and supported.
+I recommend using the Python version! Which is the one that will be developed and supported furhter on.
 
 ### Download
 
