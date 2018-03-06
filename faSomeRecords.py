@@ -36,10 +36,10 @@ sequenceN
     help='individual FASTA records.')
     parser.add_argument(
     '--outfile', '-o', default="records.fasta", nargs="?", type=str,
-    help='name for output file (default: %(default)s).')
+    help='name for output file (default: %(default)s)')
     parser.add_argument(
     '--wrap', '-w', const=100, metavar='N', nargs="?", type=int, default=False,
-    help='sequences will be wrapped every N characters (default: 100.')
+    help='sequences will be wrapped every N characters (default: 100)')
     parser.add_argument(
     '--stdout', '-s',  action="store_true", default=False,
     help='if sequences should be printed to screen.')
