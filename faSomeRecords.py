@@ -115,11 +115,11 @@ def readfasta(file):
         with gzip.open(file,'r') as f:
             lines = f.readlines()
             ihead = map(lambda i: lines.index(i), filter(lambda k: ">" in k, lines))
-                for i in range(len(ihead)):
-                    if ihead[i] != ihead[-1]:
-                        data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:ihead[i+1]]).upper()
-                    else:
-                        data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:]).upper()
+            for i in range(len(ihead)):
+                if ihead[i] != ihead[-1]:
+                    data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:ihead[i+1]]).upper()
+                else:
+                    data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:]).upper()
         return data
     else:
         with open(file, "r") as f:
