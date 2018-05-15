@@ -4,6 +4,8 @@
 import argparse, textwrap
 from sys import exit
 from re import match
+import gzip
+from random import choice
 
 def main():
     # parse arguments
@@ -48,6 +50,7 @@ sequenceN
         parser.print_usage()
         exit("FaSomeRecords.py: error: argument --list/-l or --records/-r is required")
     fasta = readfasta(args.fasta)
+    iswrapped = checkwrap(fasta)
     request = {}
     notfound = []
     mylist = []
@@ -57,7 +60,7 @@ sequenceN
                 head = head.rstrip()
                 if head[0] == ">":
                     head = head[1:]
-                if ifkeyisfound(fasta, head):
+                if fasta.get(head):
                     mylist.append(head) # to preserve order
                     request[head] = fasta[head]
                 else:
@@ -66,7 +69,7 @@ sequenceN
         for head in args.records:
             if head[0] == ">":
                 head = head[1:]
-            if ifkeyisfound(fasta, head):
+            if fasta.get(head):
                 mylist.append(head) # to preserve order
                 request[head] = fasta[head]
             else:
@@ -77,6 +80,8 @@ sequenceN
             print ">"+head
             if not args.wrap:
                 print request[head]
+            elif iswrapped:
+                print request[head]
             else:
                 print wrapseq(request[head], args.wrap)
     else:
@@ -84,32 +89,47 @@ sequenceN
             for head in mylist:
                 if not args.wrap:
                     o.write(">"+head+"\n")
-                    o.write(request[head]+"\n")
+                    o.write(request[head])
+                elif iswrapped:
+                    o.write(">"+head+"\n")
+                    o.write(request[head])
                 else:
                     o.write(">"+head+"\n")
-                    o.write(wrapseq(request[head], args.wrap)+"\n")
+                    o.write(wrapseq(request[head], args.wrap))
                     
         if len(mylist) == 0:
             print "No sequences found"
         else:
+            if args.wrap and iswrapped:
+                print "Main FASTA is already wrapped, overriding --wrap argument"
             print "%s sequence(s) found" % len(mylist)
             print "%s sequence(s) not found" % len(notfound)
             print "Sequences saved to: "+args.outfile
-
                 
 
 # functions
 
 def readfasta(file):
     data = {}
-    with open(file, "r") as f:
-        for line in f:
-            line = line.rstrip()
-            if match("^>",line):
-                head = line[1:]
-                data[head] = ''
-            else:
-                data[head] += line
+    if match(".gz$",file):
+        with gzip.open(file,'r') as f:
+            lines = f.readlines()
+            ihead = map(lambda i: lines.index(i), filter(lambda k: ">" in k, lines))
+                for i in range(len(ihead)):
+                    if ihead[i] != ihead[-1]:
+                        data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:ihead[i+1]]).upper()
+                    else:
+                        data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:]).upper()
+        return data
+    else:
+        with open(file, "r") as f:
+            lines = f.readlines()
+            ihead = map(lambda i: lines.index(i), filter(lambda k: ">" in k, lines))
+            for i in range(len(ihead)):
+                if ihead[i] != ihead[-1]:
+                    data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:ihead[i+1]]).upper()
+                else:
+                    data[lines[ihead[i]][1:-1]] = ''.join(lines[ihead[i]+1:]).upper()
         return data
 
 def wrapseq(seq, w):
@@ -120,11 +140,11 @@ def wrapseq(seq, w):
             chunks.append(seq[i:interval[interval.index(i)+1]-1])
     return("\n".join(chunks))
 
-def ifkeyisfound(x, key):
-    try:
-        x[key]
+def checkwrap(d):
+    rk = [ choice(d.keys()) for i in range(100) ]
+    if any([ "\n" in d[x] for x in rk ]):
         return True
-    except KeyError:
+    else:
         return False
   
 if __name__ == '__main__':
