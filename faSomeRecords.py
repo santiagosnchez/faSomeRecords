@@ -52,7 +52,7 @@ if args.list is not None:
 elif args.records is not None:
     heads = args.records
 requested = len(heads)
-joinheads = " ".join(head)
+joinheads = " ".join(heads)
 found = 0
 if args.stdout:
     with open(args.fasta, "r") as f:
