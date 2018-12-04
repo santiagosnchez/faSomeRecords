@@ -47,10 +47,13 @@ if args.list == None and args.records == None:
     sys.exit("FaSomeRecords.py: error: argument --list/-l or --records/-r is required")
 if args.list is not None:
     with open(args.list, "r") as l:
-        heads = l.readlines()
-        heads = map(lambda x: x.rstrip(), heads)
+        heads = l.read().splitlines()
+    if ">" not in heads[0]:
+        head = [ ">" + h for h in heads ]
 elif args.records is not None:
     heads = args.records
+    if ">" not in heads[0]:
+        head = [ ">" + h for h in heads ]
 requested = len(heads)
 joinheads = " ".join(heads)
 found = 0
@@ -58,7 +61,7 @@ if args.stdout:
     with open(args.fasta, "r") as f:
         for line in f:
             if line[0] == ">":
-                if line[1:-1] in joinheads:
+                if line[:-1] in joinheads:
                     seq = 1
                     sys.stdout.write(line)
                     found += 1
@@ -74,7 +77,7 @@ else:
         with open(args.fasta, "r") as f:
             for line in f:
                 if line[0] == ">":
-                    if line[1:-1] in joinheads:
+                    if line[:-1] in joinheads:
                         seq = 1
                         o.write(line)
                         found += 1
