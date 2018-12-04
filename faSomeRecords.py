@@ -49,11 +49,11 @@ if args.list is not None:
     with open(args.list, "r") as l:
         heads = l.read().splitlines()
     if ">" not in heads[0]:
-        head = [ ">" + h for h in heads ]
+        heads = [ ">" + h for h in heads ]
 elif args.records is not None:
     heads = args.records
     if ">" not in heads[0]:
-        head = [ ">" + h for h in heads ]
+        heads = [ ">" + h for h in heads ]
 requested = len(heads)
 joinheads = " ".join(heads)
 print joinheads
