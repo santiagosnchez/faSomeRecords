@@ -56,11 +56,13 @@ elif args.records is not None:
         head = [ ">" + h for h in heads ]
 requested = len(heads)
 joinheads = " ".join(heads)
+print joinheads
 found = 0
 if args.stdout:
     with open(args.fasta, "r") as f:
         for line in f:
             if line[0] == ">":
+                print line[:-1]
                 if line[:-1] in joinheads:
                     seq = 1
                     sys.stdout.write(line)
