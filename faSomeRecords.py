@@ -86,9 +86,9 @@ else:
     if found == 0:
         print "No sequences found"
     else:
-        print "Found %s sequence(s)" % found
+        print "Found {} sequence(s)".format(found)
         if found > requested:
-            print "Found %s sequence(s) more than requested" % found-requested
+            print "Found {} sequence(s) more than requested".format(found-requested)
         elif requested > found:
-            print "Could not find %s sequence(s)" % requested-found
+            print "Could not find {} sequence(s)".format(requested-found)
         print "Sequences saved to: "+args.outfile
