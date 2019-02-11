@@ -39,8 +39,11 @@ parser.add_argument(
 '--outfile', '-o', default="records.fasta", nargs="?", type=str,
 help='name for output file (default: %(default)s)')
 parser.add_argument(
-'--stdout', '-s',  action="store_true", default=False,
+'--stdout', '-s', action="store_true", default=False,
 help='if sequences should be printed to screen.')
+parset.add_argument(
+'--keep', '-k', action="store_true", default=False,
+help="keep the order in the list.")
 args = parser.parse_args()
 if args.list == None and args.records == None:
     parser.print_usage()
@@ -57,6 +60,7 @@ elif args.records is not None:
 requested = len(heads)
 joinheads = " ".join(heads)
 found = 0
+
 if args.stdout:
     with open(args.fasta, "r") as f:
         for line in f:
