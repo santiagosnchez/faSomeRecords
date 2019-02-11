@@ -111,6 +111,7 @@ else:
                         sys.stdout.write(line)
                         found += 1
                     else:
+                        not_found += [line[:-1]]
                         seq = 0
                 else:
                     if seq == 1:
@@ -127,6 +128,7 @@ else:
                             o.write(line)
                             found += 1
                         else:
+                            not_found += [line[1:-1]]
                             seq = 0
                     else:
                         if seq == 1:
@@ -139,4 +141,5 @@ else:
                 print "Found {} sequence(s) more than requested".format(found-requested)
             elif requested > found:
                 print "Could not find {} sequence(s)".format(requested-found)
+                print "\n".join(not_found)
             print "Sequences saved to "+args.outfile
