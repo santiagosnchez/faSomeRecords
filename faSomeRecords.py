@@ -60,42 +60,75 @@ elif args.records is not None:
 requested = len(heads)
 joinheads = " ".join(heads)
 found = 0
-
-if args.stdout:
+heads = []
+if args.keep:
+    store = {}
     with open(args.fasta, "r") as f:
         for line in f:
             if line[0] == ">":
                 if line[:-1] in joinheads:
+                    h = line[:-1]
+                    heads += [h]
                     seq = 1
-                    sys.stdout.write(line)
+                    store[h] = ''
                     found += 1
                 else:
                     seq = 0
             else:
                 if seq == 1:
-                    sys.stdout.write(line)
+                    store[h] += line
     if found == 0:
         print "No sequences found"
-else:
-    with open(args.outfile, "w") as o:
+    else:
+        if args.stdout:
+            for h in heads:
+                sys.stdout.write(h+"\n"+store[h])
+        else:
+            with open(args.outfile, "w") as o:
+                for h in heads:
+                    o.write(h+"\n"+store[h])
+            print "Found {} sequence(s)".format(found)
+            if found > requested:
+                print "Found {} sequence(s) more than requested".format(found-requested)
+            elif requested > found:
+                print "Could not find {} sequence(s)".format(requested-found)
+            print "Sequences saved to: "+args.outfile
+else:    
+    if args.stdout:
         with open(args.fasta, "r") as f:
             for line in f:
                 if line[0] == ">":
                     if line[:-1] in joinheads:
                         seq = 1
-                        o.write(line)
+                        sys.stdout.write(line)
                         found += 1
                     else:
                         seq = 0
                 else:
                     if seq == 1:
-                        o.write(line)
-    if found == 0:
-        print "No sequences found"
+                        sys.stdout.write(line)
+        if found == 0:
+            print "No sequences found"
     else:
-        print "Found {} sequence(s)".format(found)
-        if found > requested:
-            print "Found {} sequence(s) more than requested".format(found-requested)
-        elif requested > found:
-            print "Could not find {} sequence(s)".format(requested-found)
-        print "Sequences saved to: "+args.outfile
+        with open(args.outfile, "w") as o:
+            with open(args.fasta, "r") as f:
+                for line in f:
+                    if line[0] == ">":
+                        if line[:-1] in joinheads:
+                            seq = 1
+                            o.write(line)
+                            found += 1
+                        else:
+                            seq = 0
+                    else:
+                        if seq == 1:
+                            o.write(line)
+        if found == 0:
+            print "No sequences found"
+        else:
+            print "Found {} sequence(s)".format(found)
+            if found > requested:
+                print "Found {} sequence(s) more than requested".format(found-requested)
+            elif requested > found:
+                print "Could not find {} sequence(s)".format(requested-found)
+            print "Sequences saved to: "+args.outfile
