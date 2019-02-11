@@ -41,7 +41,7 @@ help='name for output file (default: %(default)s)')
 parser.add_argument(
 '--stdout', '-s', action="store_true", default=False,
 help='if sequences should be printed to screen.')
-parset.add_argument(
+parser.add_argument(
 '--keep', '-k', action="store_true", default=False,
 help="keep the order in the list.")
 args = parser.parse_args()
