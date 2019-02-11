@@ -60,6 +60,7 @@ elif args.records is not None:
 requested = len(heads)
 joinheads = " ".join(heads)
 found = 0
+not_found = []
 if args.keep:
     store = {}
     with open(args.fasta, "r") as f:
@@ -80,7 +81,11 @@ if args.keep:
     else:
         if args.stdout:
             for h in heads:
-                sys.stdout.write(h+"\n"+store[h])
+                if store.get(h):
+                    sys.stdout.write(h+"\n"+store[h])
+                else:
+                    sys.stdout.write(h+"\n"+"#not found\n")
+                    not_found += [h]
         else:
             with open(args.outfile, "w") as o:
                 for h in heads:
@@ -90,6 +95,7 @@ if args.keep:
                 print "Found {} sequence(s) more than requested".format(found-requested)
             elif requested > found:
                 print "Could not find {} sequence(s)".format(requested-found)
+                print "\n".join(not_found)
             print "Sequences saved to: "+args.outfile
 else:    
     if args.stdout:
@@ -129,4 +135,4 @@ else:
                 print "Found {} sequence(s) more than requested".format(found-requested)
             elif requested > found:
                 print "Could not find {} sequence(s)".format(requested-found)
-            print "Sequences saved to: "+args.outfile
+            print "Sequences saved to "+args.outfile
