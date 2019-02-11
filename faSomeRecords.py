@@ -60,7 +60,6 @@ elif args.records is not None:
 requested = len(heads)
 joinheads = " ".join(heads)
 found = 0
-heads = []
 if args.keep:
     store = {}
     with open(args.fasta, "r") as f:
