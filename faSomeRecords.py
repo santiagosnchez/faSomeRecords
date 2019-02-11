@@ -88,12 +88,12 @@ if args.keep:
                     not_found += [h]
         else:
             with open(args.outfile, "w") as o:
-                if store.get(h):
-                    for h in heads:
+                for h in heads:
+                    if store.get(h):
                         o.write(h+"\n"+store[h])
-                else:
-                    sys.stdout.write(h+"\n"+"#not found\n")
-                    not_found += [h]
+                    else:
+                        sys.stdout.write(h+"\n"+"#not found\n")
+                        not_found += [h]
             print "Found {} sequence(s)".format(found)
             if found > requested:
                 print "Found {} sequence(s) more than requested".format(found-requested)
