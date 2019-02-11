@@ -67,7 +67,6 @@ if args.keep:
             if line[0] == ">":
                 if line[:-1] in joinheads:
                     h = line[:-1]
-                    heads += [h]
                     seq = 1
                     store[h] = ''
                     found += 1
