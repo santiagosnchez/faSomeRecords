@@ -58,7 +58,7 @@ elif args.records is not None:
     if ">" not in heads[0]:
         heads = [ ">" + h for h in heads ]
 requested = len(heads)
-joinheads = " ".join(heads)
+joinheads = "|" + "|".join(heads) + "|"
 found = 0
 not_found = []
 if args.keep:
@@ -66,7 +66,7 @@ if args.keep:
     with open(args.fasta, "r") as f:
         for line in f:
             if line[0] == ">":
-                if line[:-1] in joinheads:
+                if "|" + line[:-1] + "|" in joinheads:
                     h = line[:-1]
                     seq = 1
                     store[h] = ''
@@ -101,12 +101,12 @@ if args.keep:
                 print "Could not find {} sequence(s)".format(requested-found)
                 print "\n".join(not_found)
             print "Sequences saved to: "+args.outfile
-else:    
+else:
     if args.stdout:
         with open(args.fasta, "r") as f:
             for line in f:
                 if line[0] == ">":
-                    if line[:-1] in joinheads:
+                    if "|" + line[:-1] + "|" in joinheads:
                         seq = 1
                         sys.stdout.write(line)
                         found += 1
