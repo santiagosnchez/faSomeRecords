@@ -123,7 +123,7 @@ else:
             with open(args.fasta, "r") as f:
                 for line in f:
                     if line[0] == ">":
-                        if line[:-1] in joinheads:
+                        if "|" + line[:-1] + "|" in joinheads:
                             seq = 1
                             o.write(line)
                             found += 1
