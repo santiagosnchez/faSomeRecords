@@ -29,6 +29,7 @@ Inspired by the C++ version of [faSomeRecords](https://github.com/ENCODE-DCC/ken
                             name for output file (default: records.fasta).
       --wrap [N], -w [N]    sequences will be wrapped every N characters (default: False).
       --stdout [], -s []    if sequences should be printed to screen.
+      --exclude, -e         Exclude these sequences from the final output.
     
     Records can be sepcified providing a list file with --list/-l
     or one by one in the command line using --records/-r.
