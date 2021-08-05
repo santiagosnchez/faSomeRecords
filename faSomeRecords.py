@@ -176,7 +176,7 @@ def parse_fasta(handle, stdout, outfile, order, exclude, requested, joinheads, h
 # main function
 def main():
     # parse arguments
-    parser = argparse.ArgumentParser(prog="FaSomeRecords.py",
+    parser = argparse.ArgumentParser(prog="faSomeRecords.py",
         formatter_class=argparse.RawTextHelpFormatter,
         description="Retrieves some FASTA records provided a FASTA file and a list or records.",
         epilog=textwrap.dedent('''\
