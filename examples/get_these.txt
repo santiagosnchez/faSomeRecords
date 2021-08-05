@@ -1,0 +1,10 @@
+>seq_14
+>seq_3
+>seq_16
+>seq_6
+>seq_5
+>seq_2
+>seq_19
+>seq_8
+>seq_0
+>seq_1
